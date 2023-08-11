@@ -11,12 +11,14 @@ export async function getStaticPaths() {
     });
 
     return {
-        fallback: false,
+        fallback: true,
         paths,
     };
 };
 
 export async function getStaticProps({ params }) { 
+    console.log(params);
+
     const resp = await fetch(`http://localhost:3000/api/students/${ params.id }`);
     const student = await resp.json();
     
@@ -33,11 +35,15 @@ export default function StudentById(props) {
     return (
         <div>
             <h1>Detalhes do Aluno</h1>
-            <ul>
-                <li>{ student.id }</li>
-                <li>{ student.name }</li>
-                <li>{ student.email }</li>
-            </ul>
+            {
+                student ?
+                    <ul>
+                        <li>{ student.id }</li>
+                        <li>{ student.name }</li>
+                        <li>{ student.email }</li>
+                    </ul>
+                : false
+            }
         </div>
     );
 };
