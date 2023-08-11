@@ -1,4 +1,6 @@
 export async function getStaticProps() {
+	console.log('\n[server] - gerando props para o componente.\n');
+
 	const resp = await fetch('http://localhost:3000/api/products');
 	const products = await resp.json();
 
@@ -10,6 +12,7 @@ export async function getStaticProps() {
 };
 
 export default function Static4(props) {
+	console.log('[cliente] - renderizando o componente...');
 	function renderProducts() {
 		return props.products.map(product => {
 			return <li key={product.id}>{product.name} - R${product.price}</li>
